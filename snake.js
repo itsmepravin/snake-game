@@ -15,6 +15,8 @@ var foodY;
 var velocityX = 0;
 var velocityY = 0;
 
+var snakeBody = [];
+
 window.onload = function () {
   canvas = document.getElementById("canvas");
   canvas.width = columns * blockSize;
@@ -36,6 +38,7 @@ function update() {
   context.fillRect(foodX, foodY, blockSize, blockSize);
 
   if (snakeX == foodX && snakeY == foodY) {
+    snakeBody.push([foodX, foodY]);
     placeFood();
   }
 
@@ -43,6 +46,10 @@ function update() {
   snakeX += velocityX * blockSize;
   snakeY += velocityY * blockSize;
   context.fillRect(snakeX, snakeY, blockSize, blockSize);
+
+  for (let i = 0; i < snakeBody.length; i++) {
+    context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+  }
 
   for (let i = 0; i < columns; i++) {
     for (let j = 0; j < rows; j++) {
@@ -60,16 +67,16 @@ function placeFood() {
 }
 
 function changeSnakeDirection(e) {
-  if (e.code == "ArrowUp") {
+  if (e.code == "ArrowUp" && velocityY != 1) {
     velocityX = 0;
     velocityY = -1;
-  } else if (e.code == "ArrowDown") {
+  } else if (e.code == "ArrowDown" && velocityY != -1) {
     velocityX = 0;
     velocityY = 1;
-  } else if (e.code == "ArrowLeft") {
+  } else if (e.code == "ArrowLeft" && velocityX != 1) {
     velocityX = -1;
     velocityY = 0;
-  } else if (e.code == "ArrowRight") {
+  } else if (e.code == "ArrowRight" && velocityX != -1) {
     velocityX = 1;
     velocityY = 0;
   }
