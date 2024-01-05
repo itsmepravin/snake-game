@@ -67,7 +67,7 @@ function update() {
   if (
     snakeX < 0 ||
     snakeX > columns * blockSize - 1 ||
-    snakeY < 0.5 ||
+    snakeY < 1 ||
     snakeY > rows * blockSize - 1
   ) {
     gameOver = true;
