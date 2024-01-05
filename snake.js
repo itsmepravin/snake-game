@@ -17,6 +17,8 @@ var velocityY = 0;
 
 var snakeBody = [];
 
+var gameOver = false;
+
 window.onload = function () {
   canvas = document.getElementById("canvas");
   canvas.width = columns * blockSize;
@@ -30,6 +32,10 @@ window.onload = function () {
 };
 
 function update() {
+  if (gameOver) {
+    return;
+  }
+
   context.fillStyle = "black";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -56,6 +62,23 @@ function update() {
 
   for (let i = 0; i < snakeBody.length; i++) {
     context.fillRect(snakeBody[i][0], snakeBody[i][1], blockSize, blockSize);
+  }
+
+  if (
+    snakeX < 0 ||
+    snakeX > columns * blockSize - 1 ||
+    snakeY < 0.5 ||
+    snakeY > rows * blockSize - 1
+  ) {
+    gameOver = true;
+    alert("Game Over!");
+  }
+
+  for (let i = 0; i < snakeBody.length; i++) {
+    if (snakeX == snakeBody[i][0] && snakeY == snakeBody[i][1]) {
+      gameOver = true;
+      alert("Game Over!");
+    }
   }
 
   for (let i = 0; i < columns; i++) {
